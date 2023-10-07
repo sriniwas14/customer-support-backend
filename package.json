@@ -1,23 +1,37 @@
 {
-  "name": "buopso",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon server.js",
-    "prod": "node server.js",
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "amqplib": "^0.10.3",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mongodb": "^6.1.0",
-    "mysql2": "^3.6.1"
-  },
-  "devDependencies": {}
+    "name": "buopso",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "npx nodemon server.js",
+        "prod": "node server.js",
+        "start": "node server.js",
+        "pretty": "npx prettier . --write"
+    },
+    "prettier": {
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "amqplib": "^0.10.3",
+        "bcrypt": "^5.1.1",
+        "body-parser": "^1.20.2",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongodb": "^6.1.0",
+        "mongoose": "^7.5.4",
+        "mysql2": "^3.6.1",
+        "yup": "^1.3.2"
+    },
+    "devDependencies": {
+        "prettier": "3.0.3"
+    }
 }
