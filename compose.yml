@@ -9,7 +9,7 @@ services:
             - ./:/app
         environment:
             MONGODB_URI: mongodb://mongo:27017/csticket
-            PORT: 3000,
+            PORT: 3000
             JWT_SECRET: 'somesecret'
             MYSQL_HOST: mysql
             MYSQL_USER: root

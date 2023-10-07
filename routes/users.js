@@ -27,13 +27,17 @@ router.post('/signin', validateBody(loginUser), async (req, res) => {
     const user = await User.findOne({ email })
 
     if (!user) {
-        return res.status(401).json({ message: 'Authentication failed' })
+        return res
+            .status(401)
+            .json({ success: false, message: 'Authentication failed' })
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password)
 
     if (!passwordMatch) {
-        return res.status(401).json({ message: 'Authentication failed' })
+        return res
+            .status(401)
+            .json({ success: false, message: 'Authentication failed' })
     }
 
     const token = jwt.sign(
@@ -42,7 +46,11 @@ router.post('/signin', validateBody(loginUser), async (req, res) => {
         { expiresIn: '8h' }
     )
 
-    res.status(200).json({ message: 'Authentication successful', token })
+    res.status(200).json({
+        success: true,
+        message: 'Authentication successful',
+        token,
+    })
 })
 
 module.exports = router
