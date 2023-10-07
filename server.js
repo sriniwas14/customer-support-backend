@@ -8,6 +8,7 @@ const { mysqlInstance, startMySQL } = require('./utils/mysql')
 // Routes
 const usersRouter = require('./routes/users')
 const ticketsRouter = require('./routes/tickets')
+const authChecker = require('./middlewares/authChecker')
 
 const port = process.env.PORT
 
@@ -16,7 +17,7 @@ const app = express()
 app.use(bodyParser.json())
 
 app.use('/auth/users', usersRouter)
-app.use('/tickets', ticketsRouter)
+app.use('/tickets', authChecker, ticketsRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
