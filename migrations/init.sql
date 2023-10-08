@@ -8,3 +8,5 @@ CREATE TABLE IF NOT EXISTS agents (
   email VARCHAR(100) UNIQUE,
   password VARCHAR(150)
 );
+
+CREATE INDEX IF NOT EXISTS idx_email ON agents (email);
