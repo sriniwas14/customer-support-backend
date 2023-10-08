@@ -42,24 +42,24 @@ Finally start the application with `npm run dev`
 
 | HTTP Method | Endpoint  | Description                              | Required Fields                                                                                           |
 | ----------- | --------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| POST        | `/`       | Create a new agent                       | - `phone` (String, required, unique) - `email` (String, required, unique) - `password` (String, required) |
-| POST        | `/signin` | Sign in an agent with email and password | - `email` (String, required) - `password` (String, required)                                              |
+| POST        | `/auth/users`       | Create a new agent                       | - `phone` (String, required, unique) - `email` (String, required, unique) - `password` (String, required) |
+| POST        | `/auth/users/signin` | Sign in an agent with email and password | - `email` (String, required) - `password` (String, required)                                              |
 
 ### Ticket Endpoints
 
 | HTTP Method | Endpoint     | Description               | Required Fields                                                                                |
 | ----------- | ------------ | ------------------------- | ---------------------------------------------------------------------------------------------- |
-| POST        | `/`          | Create a new ticket       | - `user_id` (String, required) - `title` (String, required) - `description` (String, required) |
-| GET         | `/`          | Get all tickets           | None                                                                                           |
-| GET         | `/:ticketID` | Get a single ticket by ID | None                                                                                           |
-| PUT         | `/:ticketID` | Update a ticket by ID     | - `status` (String, if user type is 'agent')                                                   |
+| POST        | `/tickets`          | Create a new ticket       | - `user_id` (String, required) - `title` (String, required) - `description` (String, required) |
+| GET         | `/tickets`          | Get all tickets           | None                                                                                           |
+| GET         | `/tickets/:ticketID` | Get a single ticket by ID | None                                                                                           |
+| PUT         | `/tickets/:ticketID` | Update a ticket by ID     | - `status` (String, if user type is 'agent')                                                   |
 
 ### Agent Endpoints
 
 | HTTP Method | Endpoint  | Description                              | Required Fields                                                                                           |
 | ----------- | --------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| POST        | `/`       | Create a new agent                       | - `phone` (String, required, unique) - `email` (String, required, unique) - `password` (String, required) |
-| POST        | `/signin` | Sign in an agent with email and password | - `email` (String, required) - `password` (String, required)                                              |
+| POST        | `/auth/agents`       | Create a new agent                       | - `phone` (String, required, unique) - `email` (String, required, unique) - `password` (String, required) |
+| POST        | `/auth/agents/signin` | Sign in an agent with email and password | - `email` (String, required) - `password` (String, required)                                              |
 
 ## Notes
 
