@@ -1,12 +1,19 @@
 const { ObjectId } = require('mongodb')
 const { mixed, object, string } = require('yup')
 
+// User
 let createUser = object({
     phone: string().min(10).max(15).required(),
     email: string().email().required(),
     password: string().min(8).required(),
 })
 
+let loginUser = object({
+    email: string().email().required(),
+    password: string().min(8).required(),
+})
+
+// Ticket
 let createTicket = object({
     user_id: mixed((value) => ObjectId.isValid(value)),
     title: string().min(10).max(40).required(),
@@ -19,7 +26,14 @@ let updateTicket = object({
     description: string().min(10).max(100),
 })
 
-let loginUser = object({
+// Agent
+let createAgent = object({
+    name: string().required(),
+    email: string().email().required(),
+    password: string().min(8).required(),
+})
+
+let loginAgent = object({
     email: string().email().required(),
     password: string().min(8).required(),
 })
@@ -41,4 +55,6 @@ module.exports = {
     loginUser,
     createTicket,
     updateTicket,
+    createAgent,
+    loginAgent,
 }

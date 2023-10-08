@@ -58,6 +58,14 @@ router.get('/:ticketID', async (req, res) => {
 // Update a ticket by ID
 router.put('/:ticketID', validateBody(updateTicket), async (req, res) => {
     try {
+        if (req.userType === 'agent') {
+            req.body = {
+                status: req.body.status,
+            }
+        } else {
+            delete req.body.status
+        }
+
         const updatedTicket = await Ticket.findByIdAndUpdate(
             req.params.ticketID,
             { $set: req.body },
@@ -68,6 +76,10 @@ router.put('/:ticketID', validateBody(updateTicket), async (req, res) => {
             return res
                 .status(404)
                 .json({ success: false, message: 'Ticket not found' })
+        }
+
+        if (req.userType === 'agent') {
+            console.log('Sent Status Update Notification!')
         }
 
         res.json({ success: true, updatedTicket })

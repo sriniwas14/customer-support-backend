@@ -7,21 +7,6 @@ const dbConfig = {
     database: process.env.MYSQL_DATABASE,
 }
 
-let mysqlInstance
+let mysqlPool = mysql.createPool(dbConfig).promise()
 
-function startMySQL() {
-    mysqlInstance = mysql.createConnection(dbConfig)
-
-    mysqlInstance.connect((err) => {
-        if (err) {
-            console.error('Error connecting to MySQL:', err)
-        } else {
-            console.log('Connected to MySQL')
-        }
-    })
-}
-
-module.exports = {
-    mysqlInstance,
-    startMySQL,
-}
+module.exports = mysqlPool

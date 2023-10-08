@@ -15,6 +15,7 @@ services:
             MYSQL_USER: root
             MYSQL_PASSWORD: root
             MYSQL_DATABASE: csticket
+            RABBITMQ_URI: amqp://rabbitmq:5672
     mongo:
         image: mongo
         ports:
@@ -32,7 +33,6 @@ services:
             - '3306:3306'
         volumes:
             - ./migrations:/migrations
-
     rabbitmq:
         image: rabbitmq
         ports:

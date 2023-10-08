@@ -49,6 +49,7 @@ router.post('/signin', validateBody(loginUser), async (req, res) => {
     res.status(200).json({
         success: true,
         message: 'Authentication successful',
+        userType: 'user',
         token,
     })
 })
