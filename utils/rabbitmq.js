@@ -1,4 +1,4 @@
-const amqp = require('amqplib/callback_api')
+const amqp = require('amqplib')
 
 class RabbitMQ {
     constructor() {
@@ -6,34 +6,47 @@ class RabbitMQ {
         this.channel = null
     }
 
-    connect(url) {
-        return new Promise((resolve, reject) => {
-            amqp.connect(url, (err, connection) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    this.connection = connection
-                    resolve(connection)
-                }
-            })
-        })
+    async connect(url) {
+        try {
+            this.connection = await amqp.connect(url)
+            return this.connection
+        } catch (error) {
+            throw error
+        }
     }
 
-    createChannel() {
-        return new Promise((resolve, reject) => {
+    async createChannel() {
+        try {
             if (!this.connection) {
-                return reject(new Error('Connection is not established.'))
+                throw new Error('Connection is not established.')
             }
 
-            this.connection.createChannel((err, channel) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    this.channel = channel
-                    resolve(channel)
-                }
-            })
-        })
+            this.channel = await this.connection.createChannel()
+            return this.channel
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async sendMessage(queueName, messageObject) {
+        try {
+            if (!this.channel) {
+                throw new Error('Channel is not created.')
+            }
+
+            // Assert the queue and send the message
+            await this.channel.assertQueue(queueName)
+            this.channel.sendToQueue(
+                queueName,
+                Buffer.from(JSON.stringify(messageObject))
+            )
+
+            console.log(
+                `Sent: ${JSON.stringify(messageObject)} to ${queueName}`
+            )
+        } catch (error) {
+            throw error
+        }
     }
 
     close() {
@@ -47,4 +60,21 @@ class RabbitMQ {
     }
 }
 
-module.exports = new RabbitMQ(process.env.RABBITMQ_URL)
+const getBrokerInstance = async () => {
+    let brokerInstance
+
+    try {
+        if (brokerInstance) return brokerInstance
+        brokerInstance = new RabbitMQ()
+        await brokerInstance.connect(process.env.RABBITMQ_URI)
+        await brokerInstance.createChannel()
+        console.log('Connected to RabbitMQ')
+        return brokerInstance
+    } catch (error) {
+        console.log('Error in Connecting to RabbitMQ', error)
+    }
+}
+
+module.exports = {
+    getBrokerInstance,
+}

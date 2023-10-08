@@ -6,6 +6,7 @@ const {
     updateTicket,
     validateBody,
 } = require('../utils/validators')
+const rabbitmq = require('../utils/rabbitmq')
 
 router.post('/', validateBody(createTicket), async (req, res) => {
     try {
@@ -79,7 +80,11 @@ router.put('/:ticketID', validateBody(updateTicket), async (req, res) => {
         }
 
         if (req.userType === 'agent') {
-            console.log('Sent Status Update Notification!')
+            let instance = await rabbitmq.getBrokerInstance()
+            instance.sendMessage('notifications', {
+                ticketID: updatedTicket._id,
+                status: updatedTicket.status,
+            })
         }
 
         res.json({ success: true, updatedTicket })

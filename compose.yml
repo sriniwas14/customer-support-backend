@@ -15,7 +15,7 @@ services:
             MYSQL_USER: root
             MYSQL_PASSWORD: root
             MYSQL_DATABASE: csticket
-            RABBITMQ_URI: amqp://rabbitmq:5672
+            RABBITMQ_URI: amqp://defuser:defpass@rabbitmq:5672
     mongo:
         image: mongo
         ports:
@@ -34,6 +34,10 @@ services:
         volumes:
             - ./migrations:/migrations
     rabbitmq:
-        image: rabbitmq
+        image: 'rabbitmq:management'
         ports:
-            - 5672:5672
+            - '5672:5672' # RabbitMQ server port
+            - '15672:15672' # RabbitMQ management plugin port (for web UI)
+        environment:
+            RABBITMQ_DEFAULT_USER: defuser # Set your RabbitMQ username
+            RABBITMQ_DEFAULT_PASS: defpass # Set your RabbitMQ password

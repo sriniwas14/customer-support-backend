@@ -27,5 +27,4 @@ app.get('/', (req, res) => {
     res.send('Server Active!')
 })
 
-// rabbitmq.connect()
 app.listen(port, () => console.log('Server Started on Port', port))
